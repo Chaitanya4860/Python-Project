@@ -1,0 +1,74 @@
+class System:
+    def __init__(self):
+        self.students = {}
+
+    def addStudent(self, roll_no, name, age, grade):
+        if roll_no not in self.students:
+            self.students[roll_no] = {'name': name, 'age': age, 'grade': grade}
+            print(f"Student {name} added successfully.")
+        else:
+            print(f"Student with roll number {roll_no} already exists.")
+
+    def viewStudent(self, roll_no):
+        student = self.students.get(roll_no)
+        if student:
+            print("Roll No:", roll_no)
+            for key, value in student.items():
+                print(key.capitalize() + ":", value)
+        else:
+            print(f"Student with roll number {roll_no} does not exist.")
+
+    def searchStudent(self, name):
+        found = False
+        for roll_no, student in self.students.items():
+            if student['name'].lower() == name.lower():
+                print("Student found with the following details:")
+                print("Roll No:", roll_no)
+                for key, value in student.items():
+                    print(key.capitalize() + ":", value)
+                found = True
+        if not found:
+            print(f"No student with the name '{name}' found.")
+
+    def deleteStudent(self, roll_no):
+        if roll_no in self.students:
+            del self.students[roll_no]
+            print(f"Student with roll number {roll_no} deleted successfully.")
+        else:
+            print(f"Student with roll number {roll_no} does not exist.")
+
+    def menu(self):
+        while True:
+            print("\n===== Student Record Management System =====")
+            print("1. Add Student")
+            print("2. View Student")
+            print("3. Search Student")
+            print("4. Delete Student")
+            print("5. Exit")
+            choice = input("Enter your choice: ")
+
+            if choice == '1':
+                roll_no = int(input("Enter Roll No: "))
+                name = input("Enter Name: ")
+                age = int(input("Enter Age: "))
+                grade = input("Enter Grade: ")
+                self.addStudent(roll_no, name, age, grade)
+            elif choice == '2':
+                roll_no = int(input("Enter Roll No to view: "))
+                self.viewStudent(roll_no)
+            elif choice == '3':
+                name = input("Enter Name to search: ")
+                self.searchStudent(name)
+            elif choice == '4':
+                roll_no = int(input("Enter Roll No to delete: "))
+                self.deleteStudent(roll_no)
+            elif choice == '5':
+                print("Exiting...")
+                break
+            else:
+                print("Invalid choice. Please enter a valid option.")
+
+
+
+student = System()
+student.menu()
